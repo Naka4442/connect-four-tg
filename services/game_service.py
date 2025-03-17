@@ -6,23 +6,21 @@ class GameService:
     def __init__(self):
         self.games: Dict[int, ConnectFour] = {}  # Храним активные игры (chat_id -> ConnectFour)
 
-    def start_game(self, chat_id: int, user_id: int) -> str:
+    def start_game(self, user_id: int) -> bool:
         """Создаёт новую игру для чата и добавляет первого игрока."""
-        if chat_id in self.games:
-            return "Игра уже запущена!"
-        game = ConnectFour()
-        game.add_player(user_id)
-        self.games[chat_id] = game
-        return "Игра началась! Первый игрок сделал ход. Второй может присоединиться!"
+        if user_id in self.games:
+            return False
+        self.games[user_id] = ConnectFour()
+        return True
 
-    def join_game(self, chat_id: int, user_id: int) -> str:
+    def join_game(self, first_player_id: int, user_id: int) -> str:
         """Добавляет второго игрока в игру."""
-        game = self.games.get(chat_id)
-        if not game:
+        if first_player_id not in self.games:
+            if user_id in self.games:
+                return "Игра уже запущена!"
             return "Игра не запущена! Используйте /start_game."
-        if game.add_player(user_id):
-            return "Второй игрок присоединился!"
-        return "Игра уже идет, больше нельзя присоединяться."
+        game = self.games[first_player_id]
+        
 
     def make_move(self, chat_id: int, user_id: int, column: int) -> str:
         """Обрабатывает ход игрока."""
