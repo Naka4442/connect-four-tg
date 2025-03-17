@@ -2,7 +2,7 @@ class ConnectFour:
     ROWS = 6
     COLS = 7
     EMPTY_CELL = "⬜"
-    PLAYER_TOKENS = {1: "🔴", 2: "🟡"}
+    PLAYER_TOKENS = {1: "🍔", 2: "🌯"}
 
     def __init__(self):
         self.board = [[self.EMPTY_CELL for _ in range(self.COLS)] for _ in range(self.ROWS)]
@@ -52,8 +52,7 @@ class ConnectFour:
 
 if __name__ == "__main__":
     game = ConnectFour()
-    game.drop_disc(5)
-    game.drop_disc(6)
-    game.drop_disc(6)
-    game.drop_disc(4)
+    for j in range(6):
+        for i in range(7):
+            game.drop_disc(i)
     print(game.render_board())
