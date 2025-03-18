@@ -1,4 +1,5 @@
-from services import GameService, GameStatus
+from services import GameService
+from core import GameStatus
 from aiogram import types
 from keyboards import GameKeyboard
 from callbacks import GameCallback

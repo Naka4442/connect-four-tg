@@ -1,6 +1,7 @@
-from .game_callback import GameCallback
+from .game_callback import GameCallback, AIGameCallback
 
 
 __all__ = [
-    "GameCallback"
+    "GameCallback",
+    "AIGameCallback"
 ]
