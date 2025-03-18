@@ -1,0 +1,22 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [   
+        {
+            "name": "Python: Bot",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",  // Путь к главному файлу, который запускает бота
+            "console": "integratedTerminal",
+            "env": {
+                "BOT_TOKEN": "YOUR_BOT_TOKEN",  // Укажи переменную окружения с токеном твоего бота
+                "OTHER_ENV_VAR": "value"  // Можешь добавить другие переменные окружения
+            },
+            "envFile": "${workspaceFolder}/.env",  // Если ты используешь файл .env для конфигураций
+            "justMyCode": true,
+            "args": []  // Сюда можно добавить аргументы командной строки, если они нужны
+        },
+    ]
+}

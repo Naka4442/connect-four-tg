@@ -1,21 +1,5 @@
-from core import ConnectFour
+from core import ConnectFour, GameResult, GameStatus
 from typing import Dict
-
-from typing import Optional
-from enum import Enum
-
-
-class GameStatus(Enum):
-    ONGOING = "ongoing"
-    WIN = "win"
-    DRAW = "draw"
-    INVALID_MOVE = "invalid_move"
-
-
-class GameResult:
-    def __init__(self, status: GameStatus, winner: Optional[int] = None):
-        self.status = status
-        self.winner = winner
 
 
 class GameService:
