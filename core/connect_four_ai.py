@@ -3,6 +3,8 @@ from typing import List, Optional
 
 
 class ConnectFourAI:
+    EMPTY_CELL = "⚫️"
+
     def __init__(self, bot_symbol: str, player_symbol: str):
         self.bot_symbol = bot_symbol
         self.player_symbol = player_symbol
@@ -20,7 +22,7 @@ class ConnectFourAI:
                 return col  # Заблокировать игрока
 
         # 3. Если нет критичных ходов, выбираем случайный допустимый ход
-        valid_columns = [col for col in range(len(board[0])) if board[0][col] is None]
+        valid_columns = [col for col in range(len(board[0])) if board[0][col] == self.EMPTY_CELL]
         return random.choice(valid_columns) if valid_columns else -1  # Если доска заполнена
 
     def _can_win_next(self, board: List[List[Optional[str]]], col: int, symbol: str) -> bool:

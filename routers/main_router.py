@@ -1,5 +1,5 @@
 from handlers import *
-from callbacks import GameCallback
+from callbacks import GameCallback, AIGameCallback
 from aiogram import Router
 from aiogram.filters.command import Command
 
@@ -25,3 +25,4 @@ class MainRouter(Router):
         self.message.register(self.restart_handler.cmd_restart_handler, Command("restart"))
         
         self.callback_query.register(self.game_handler.game_callback_handler, GameCallback.filter())
+        self.callback_query.register(self.ai_game_handler.game_callback_handler, AIGameCallback.filter())
