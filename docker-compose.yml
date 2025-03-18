@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  bot:
+    container_name: connect-four-tg
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./config.yml:/app/config.yml
