@@ -34,7 +34,7 @@ class GameService:
         """Добавляет второго игрока в игру."""
         game = self.games.get(first_player_id)
         if not game:
-            return "Игра не запущена! Используйте /start_game."
+            return "Игра не запущена! Используйте /game."
         if not game.add_player(user_id):
             return "В игру уже вошли два игрока."
         return "Второй игрок вошел в игру."
@@ -69,9 +69,9 @@ class GameService:
             return None
         return game.PLAYER_TOKENS.get(game.turn % 2 + 1)
 
-    def stop_game(self, chat_id: int) -> str:
+    def stop_game(self, first_player_id: int) -> bool:
         """Останавливает игру в чате."""
-        if chat_id in self.games:
-            del self.games[chat_id]
-            return "Игра завершена."
-        return "Нет активной игры."
+        if first_player_id in self.games:
+            del self.games[first_player_id]
+            return True
+        return False

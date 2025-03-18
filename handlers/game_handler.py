@@ -11,7 +11,7 @@ class GameHandler:
         
     async def cmd_start_game_handler(self, message: types.Message):
         if not self.game_service.start_game(message.from_user.id):
-            await message.reply("Игра уже запущена! Используйте /join_game.")
+            await message.reply("Для вас игра уже где-то запущена! Используйте /restart для перезапуска игры")
             return
         game = self.game_service.games[message.from_user.id]
         await message.answer(f"Игра запущена! Выберите столбец", reply_markup=self.game_keyboard.get_keyboard(game.board, message.from_user.id))
