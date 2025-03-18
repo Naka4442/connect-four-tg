@@ -5,7 +5,7 @@ class ConnectFour:
     ROWS = 6
     COLS = 7
     EMPTY_CELL = "⚫️"
-    PLAYER_TOKENS = {1: "💩", 2: "❤️"}
+    PLAYER_TOKENS = {1: "😎", 2: "😈"}
 
     def __init__(self):
         self.board = [[self.EMPTY_CELL for _ in range(self.COLS)] for _ in range(self.ROWS)]
