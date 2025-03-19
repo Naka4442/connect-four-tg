@@ -7,10 +7,16 @@ class ConnectFour:
     EMPTY_CELL = "⚫️"
     PLAYER_TOKENS = {1: "😎", 2: "😈"}
 
-    def __init__(self):
+    def __init__(self, tokens: list[str] = None):
+        if tokens:
+            self.PLAYER_TOKENS = {1: tokens[0], 2: tokens[1]}
         self.board = [[self.EMPTY_CELL for _ in range(self.COLS)] for _ in range(self.ROWS)]
         self.players = {}  # {user_id: player_number}
         self.turn = 0  # Количество ходов (определяет, чей ход)
+
+    def is_valid_move(self, col: int) -> bool:
+        """Проверяет, можно ли сделать ход в колонку col (есть ли свободное место)."""
+        return self.board[0][col] == self.EMPTY_CELL  # Если верхняя ячейка пустая – ход возможен
 
     def add_player(self, user_id: int) -> bool:
         if user_id not in self.players and len(self.players) < 2:
@@ -24,12 +30,12 @@ class ConnectFour:
         if column < 0 or column >= self.COLS or self.board[0][column] != self.EMPTY_CELL:
             return None
 
-        for row in reversed(range(self.ROWS)):
+        for row in reversed(range(self.ROWS)):  # Проверяем снизу вверх
             if self.board[row][column] == self.EMPTY_CELL:
-                self.board[row][column] = self.PLAYER_TOKENS[self.players[user_id]]
+                self.board[row][column] = self.PLAYER_TOKENS[self.players.get(user_id)]
                 self.turn += 1
-                return row, column  # Возвращаем позицию последнего хода
-        return None
+                return row, column  # Теперь возвращаем координаты!
+        return None  # Если колонка заполнена
 
     def check_winner(self, row: int, col: int) -> bool:
         token = self.board[row][col]
@@ -53,3 +59,10 @@ class ConnectFour:
     def render_board(self) -> str:
         board_str = "\n".join("".join(row) for row in self.board)
         return board_str
+    
+    def clone(self) -> "ConnectFour":
+        game = ConnectFour(list(self.PLAYER_TOKENS.values()))
+        game.board = [row.copy() for row in self.board]
+        game.players = self.players.copy()
+        game.turn = self.turn
+        return game

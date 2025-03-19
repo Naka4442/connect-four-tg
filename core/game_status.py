@@ -10,6 +10,6 @@ class GameStatus(Enum):
 
 
 class GameResult:
-    def __init__(self, status: GameStatus, winner: Optional[int] = None):
+    def __init__(self, status: GameStatus, winner: Optional[str] = None):
         self.status = status
         self.winner = winner
