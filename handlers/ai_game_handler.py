@@ -59,7 +59,7 @@ class AIGameHandler:
         # Проверяем результат хода бота
         match bot_result.status:
             case GameStatus.WIN:
-                await callback_query.message.edit_text("Победил бот!", reply_markup=None)
+                await callback_query.message.edit_text("Победил бот 🤖!", reply_markup=None)
                 return
 
             case GameStatus.DRAW:

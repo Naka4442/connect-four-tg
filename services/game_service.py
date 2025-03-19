@@ -32,6 +32,7 @@ class GameService:
         if len(game.players) < 2:
             self.join_game(first_player_id, user_id)
 
+        potentional_winner = self.get_active_player(first_player_id)
         move = game.drop_disc(user_id, column - 1)
         if move is None:
             return GameResult(GameStatus.INVALID_MOVE)
@@ -39,7 +40,7 @@ class GameService:
         row, col = move
         if game.check_winner(row, col):
             del self.games[first_player_id]
-            return GameResult(GameStatus.WIN, user_id)
+            return GameResult(GameStatus.WIN, potentional_winner)
 
         if game.is_full():
             del self.games[first_player_id]

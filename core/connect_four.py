@@ -7,7 +7,9 @@ class ConnectFour:
     EMPTY_CELL = "⚫️"
     PLAYER_TOKENS = {1: "😎", 2: "😈"}
 
-    def __init__(self):
+    def __init__(self, tokens: list[str] = None):
+        if tokens:
+            self.PLAYER_TOKENS = {1: tokens[0], 2: tokens[1]}
         self.board = [[self.EMPTY_CELL for _ in range(self.COLS)] for _ in range(self.ROWS)]
         self.players = {}  # {user_id: player_number}
         self.turn = 0  # Количество ходов (определяет, чей ход)
@@ -59,7 +61,7 @@ class ConnectFour:
         return board_str
     
     def clone(self) -> "ConnectFour":
-        game = ConnectFour()
+        game = ConnectFour(list(self.PLAYER_TOKENS.values()))
         game.board = [row.copy() for row in self.board]
         game.players = self.players.copy()
         game.turn = self.turn
