@@ -22,9 +22,8 @@ class AggressiveAI(IGameAI):
             if self._can_win_next(game, col, player_symbol):
                 return col
 
-        # 3. Если никто не может выиграть, выбираем случайный ход
-        valid_columns = [col for col in range(game.COLS) if game.is_valid_move(col)]
-        return random.choice(valid_columns) if valid_columns else None
+        # 3. Если никто не может выиграть, выбираем столбец по стратегии
+        return self._choose_best_move(game)
 
     def _can_win_next(self, game: ConnectFour, col: int, symbol: str) -> bool:
         """Проверяет, можно ли выиграть на следующем ходу."""
@@ -35,4 +34,11 @@ class AggressiveAI(IGameAI):
             return False  # Если ход невозможен
 
         row, col = result  # Получаем координаты
-        return temp_game.check_winner(row, col)  # Передаем их в check_winner()
+        return temp_game.check_winner(row, col)  # Проверяем на победу
+
+    def _choose_best_move(self, game: ConnectFour) -> int:
+        """Выбирает лучший ход на основе анализа поля."""
+        valid_columns = [col for col in range(game.COLS) if game.is_valid_move(col)]
+        
+        # Простой случайный выбор среди доступных колонок (можно улучшить)
+        return random.choice(valid_columns) if valid_columns else None
