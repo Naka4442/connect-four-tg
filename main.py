@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher
 from services import GameService, AIGameService
+from core import ConnectFourAI, AggressiveAI
 from routers import MainRouter
 from handlers import *
 from keyboards import GameKeyboard
@@ -15,7 +16,7 @@ async def main():
     dp = Dispatcher()
     # core
     game_service = GameService()
-    ai_game_service = AIGameService()
+    ai_game_service = AIGameService(AggressiveAI("😈"))
     game_keyboard = GameKeyboard()
     start_handler = StartHandler()
     game_handler = GameHandler(game_service, game_keyboard)

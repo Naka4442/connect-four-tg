@@ -12,6 +12,10 @@ class ConnectFour:
         self.players = {}  # {user_id: player_number}
         self.turn = 0  # Количество ходов (определяет, чей ход)
 
+    def is_valid_move(self, col: int) -> bool:
+        """Проверяет, можно ли сделать ход в колонку col (есть ли свободное место)."""
+        return self.board[0][col] == self.EMPTY_CELL  # Если верхняя ячейка пустая – ход возможен
+
     def add_player(self, user_id: int) -> bool:
         if user_id not in self.players and len(self.players) < 2:
             self.players[user_id] = len(self.players) + 1
@@ -24,12 +28,11 @@ class ConnectFour:
         if column < 0 or column >= self.COLS or self.board[0][column] != self.EMPTY_CELL:
             return None
 
-        for row in reversed(range(self.ROWS)):
+        for row in reversed(range(self.ROWS)):  # Проверяем снизу вверх
             if self.board[row][column] == self.EMPTY_CELL:
-                self.board[row][column] = self.PLAYER_TOKENS[self.players[user_id]]
-                self.turn += 1
-                return row, column  # Возвращаем позицию последнего хода
-        return None
+                self.board[row][column] = self.PLAYER_TOKENS[self.players.get(user_id)]
+                return row, column  # Теперь возвращаем координаты!
+        return None  # Если колонка заполнена
 
     def check_winner(self, row: int, col: int) -> bool:
         token = self.board[row][col]
@@ -53,3 +56,10 @@ class ConnectFour:
     def render_board(self) -> str:
         board_str = "\n".join("".join(row) for row in self.board)
         return board_str
+    
+    def clone(self) -> "ConnectFour":
+        game = ConnectFour()
+        game.board = [row.copy() for row in self.board]
+        game.players = self.players.copy()
+        game.turn = self.turn
+        return game
