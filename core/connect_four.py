@@ -31,6 +31,7 @@ class ConnectFour:
         for row in reversed(range(self.ROWS)):  # Проверяем снизу вверх
             if self.board[row][column] == self.EMPTY_CELL:
                 self.board[row][column] = self.PLAYER_TOKENS[self.players.get(user_id)]
+                self.turn += 1
                 return row, column  # Теперь возвращаем координаты!
         return None  # Если колонка заполнена
 
