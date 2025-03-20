@@ -16,7 +16,7 @@ async def main():
     dp = Dispatcher()
     # core
     game_service = GameService()
-    ai_game_service = AIGameService(AggressiveAI("🤖"))
+    ai_game_service = AIGameService(SmartAI("🤖"))
     game_keyboard = GameKeyboard()
     start_handler = StartHandler()
     game_handler = GameHandler(game_service, game_keyboard)
