@@ -21,18 +21,20 @@ class GameHandler:
         first_player_id = callback_data.first_player_id
         user_id = callback_query.from_user.id
         print(user_id, "Нажал на", callback_data.col_index)
+        print("Я тут")
         column = callback_data.col_index
         if column == -1:
             await callback_query.answer("Выберите столбец", show_alert=True)
             return
-        result = self.game_service.make_move(first_player_id, user_id, column)
+        result = self.game_service.make_move(first_player_id, user_id, column, callback_query.from_user.full_name)
         match result.status:
             case GameStatus.ONGOING:
                 game = self.game_service.games[first_player_id]
                 print(game.render_board())
+                active_players = self.game_service.get_active_players(first_player_id)
                 active_player = self.game_service.get_active_player(first_player_id)
                 await callback_query.message.edit_text(
-                    text=f"Ход: {active_player}", 
+                    text=f"{'\nvs\n'.join(active_players)}\nХод: {active_player}", 
                     reply_markup=self.game_keyboard.get_keyboard(game.board, callback_data.first_player_id)
                 )
             case GameStatus.INVALID_MOVE:
@@ -42,7 +44,11 @@ class GameHandler:
                 winner = result.winner
                 await callback_query.message.edit_text(
                     text=f"Победил {winner}",
-                    reply_markup=None
+                    reply_markup=self.game_keyboard.get_keyboard(
+                        result.game_state, 
+                        callback_data.first_player_id, 
+                        is_win=True
+                    )
                 )
                 return
             case GameStatus.DRAW:
